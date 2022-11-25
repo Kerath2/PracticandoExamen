@@ -39,7 +39,7 @@ int resuelve(int x, int y, int c, int tablero[N][M], int num, int n, int m) {
     return 0;
   }
 
-  if (contador == 10) { // Se agrego esto para debuggear
+  if (contador == 5) { // Se agrego esto para debuggear
     return 1;
   }
 
@@ -48,15 +48,21 @@ int resuelve(int x, int y, int c, int tablero[N][M], int num, int n, int m) {
   for (int i = 0; i < 4; i++) {
     if (es_valido_llenar(i, x, y, c, tablero, n, m)) {
       llena(i, x, y, c, tablero, n, m, &quedaX, &quedaY, num);
+      // imprimeTablero(tablero,n,m);
       for (int j = 0; j < 8; j++) {
         newX = quedaX + mov[j][0];
         newY = quedaY + mov[j][1];
         if (es_valido_pisar(newX, newY, tablero, n, m)) {
-          if (resuelve(newX, newY, c, tablero, num + 1, n, m))
+          // printf("Newx: %d NewY %d\n",newX,newY);
+          // printf("Recursividad\n");
+          if (resuelve(newX, newY, c, tablero, num + 1, n, m)){
             return 1;
+          }
           quita(i, quedaX, quedaY, c, tablero, n, m);
+          num--;
         }
       }
+        quita(i, quedaX, quedaY, c, tablero, n, m);
     }
   }
   return 0;
